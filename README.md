@@ -1,4 +1,4 @@
-# VCV Rack
+# VCV Rack  (with Bloodbat's fixes for building it with MSYS' GCC 14).
 
 *Rack* is the host application for the VCV virtual Eurorack modular synthesizer platform.
 
