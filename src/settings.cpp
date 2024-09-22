@@ -40,6 +40,7 @@ float knobScrollSensitivity = 0.001f;
 float sampleRate = 0;
 int threadCount = 1;
 bool tooltips = true;
+bool mouseGlow = true;
 bool cpuMeter = false;
 bool lockModules = false;
 bool squeezeModules = true;
@@ -167,6 +168,8 @@ json_t* toJson() {
 	json_object_set_new(rootJ, "threadCount", json_integer(threadCount));
 
 	json_object_set_new(rootJ, "tooltips", json_boolean(tooltips));
+	
+	json_object_set_new(rootJ, "mouseGlow", json_boolean(mouseGlow));
 
 	json_object_set_new(rootJ, "cpuMeter", json_boolean(cpuMeter));
 
@@ -366,6 +369,10 @@ void fromJson(json_t* rootJ) {
 	json_t* tooltipsJ = json_object_get(rootJ, "tooltips");
 	if (tooltipsJ)
 		tooltips = json_boolean_value(tooltipsJ);
+	
+	json_t* mouseGlowJ = json_object_get(rootJ, "mouseGlow");
+	if (mouseGlowJ)
+		mouseGlow = json_boolean_value(mouseGlowJ);
 
 	json_t* cpuMeterJ = json_object_get(rootJ, "cpuMeter");
 	if (cpuMeterJ)

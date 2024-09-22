@@ -460,6 +460,8 @@ struct ViewButton : MenuButton {
 		HaloBrightnessSlider* haloBrightnessSlider = new HaloBrightnessSlider;
 		haloBrightnessSlider->box.size.x = 250.0;
 		menu->addChild(haloBrightnessSlider);
+		
+		menu->addChild(createBoolPtrMenuItem("Mouse cursor glow", "", &settings::mouseGlow));
 
 		// Cable colors
 		menu->addChild(createSubmenuItem("Cable colors", "", [=](ui::Menu* menu) {

@@ -65,6 +65,7 @@ extern float knobLinearSensitivity;
 extern float knobScrollSensitivity;
 extern float sampleRate;
 extern int threadCount;
+extern bool mouseGlow;
 extern bool tooltips;
 extern bool cpuMeter;
 extern bool lockModules;
