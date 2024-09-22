@@ -1,5 +1,13 @@
 # VCV Rack  (with Bloodbat's fixes for building it with MSYS' GCC 14).
 
+These fixes need patch.
+
+You can install it by running
+
+`pacman -Syu patch`
+
+---
+
 *Rack* is the host application for the VCV virtual Eurorack modular synthesizer platform.
 
 - [VCV website](https://vcvrack.com/)
