@@ -1,0 +1,4 @@
+40238c40238
+<         int flags = 0;
+---
+>         unsigned long flags = 0;

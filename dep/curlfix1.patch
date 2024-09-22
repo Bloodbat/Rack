@@ -1,0 +1,4 @@
+3776c3776
+<         int flags = 0;
+---
+>         unsigned long flags = 0;

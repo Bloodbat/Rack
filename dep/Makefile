@@ -133,6 +133,11 @@ curl-7.79.1:
 	$(SHA256) curl-7.79.1.tar.gz 370b11201349816287fb0ccc995e420277fbfcaf76206e309b3f60f0eda090c2
 	$(UNTAR) curl-7.79.1.tar.gz
 	rm curl-7.79.1.tar.gz
+ifdef ARCH_WIN
+	patch ./curl-7.79.1/m4/curl-functions.m4 curlfix1.patch
+	patch ./curl-7.79.1/lib/nonblock.c curlfix2.patch
+	patch ./curl-7.79.1/configure curlfix3.patch
+endif
 
 CURL_FLAGS += --disable-symbol-hiding --enable-shared=no
 CURL_FLAGS += --enable-http --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --enable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smb --disable-smtp --disable-gopher --disable-mqtt --disable-manual --enable-threaded-resolver --enable-pthreads --enable-verbose --disable-sspi --disable-ntlm --disable-ntlm-wb --disable-tls-srp --disable-unix-sockets --disable-doh --disable-mime --disable-dateparse --disable-netrc --disable-progress-meter --disable-alt-svc

@@ -1,0 +1,4 @@
+68c68
+<   return ioctlsocket(sockfd, FIONBIO, &flags);
+---
+>   return ioctlsocket(sockfd, (long)FIONBIO, &flags);
