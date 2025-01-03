@@ -1,5 +1,11 @@
 # VCV Rack  (with Bloodbat's fixes for building it with MSYS' GCC 14).
 
+Branch archived on January 2025. Rack 2.6.0 will build with MSys' GCC 14. No further updates will be made.
+
+Kept in case someone finds it useful.
+
+---
+
 These fixes need patch.
 
 You can install it by running
