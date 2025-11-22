@@ -150,6 +150,12 @@ void RackWidget::draw(const DrawArgs& args) {
 		nvgCurrentTransform(args.vg, t);
 		float zoom = t[3];
 		// Draw mouse spotlight
+		if (settings::mouseGlow) {
+			settings::spotlightBrightness = 0.2f;
+		} else {
+			settings::spotlightBrightness = 0.f;
+		}
+
 		nvgBeginPath(args.vg);
 		nvgRect(args.vg, 0.0, 0.0, VEC_ARGS(box.size));
 		nvgFillPaint(args.vg, nvgRadialGradient(args.vg,
