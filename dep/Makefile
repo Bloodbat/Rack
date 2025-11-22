@@ -41,7 +41,7 @@ ifdef ARCH_WIN
 	openssl = lib/libcrypto.a
 	libcurl = lib/libcurl.a
 	zstd = lib/libzstd.a
-	libarchive = lib/libarchive_static.a
+	libarchive = lib/libarchive.a
 	libspeexdsp = lib/libspeexdsp.a
 	libsamplerate = lib/libsamplerate.a
 	rtmidi = lib/librtmidi.a
@@ -85,17 +85,18 @@ include $(RACK_DIR)/dep.mk
 # Targets
 # These targets are all order-only "|" because we usually don't care if a library was built before or after other libraries.
 
-glew-2.1.0:
-	$(WGET) "https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.tgz"
-	$(SHA256) glew-2.1.0.tgz 04de91e7e6763039bc11940095cd9c7f880baba82196a7765f727ac05a993c95
-	$(UNTAR) glew-2.1.0.tgz
-	rm glew-2.1.0.tgz
+glew-2.2.0:
+	$(WGET) "https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.tgz"
+	$(SHA256) glew-2.2.0.tgz d4fc82893cfb00109578d0a1a2337fb8ca335b3ceccf97b97e5cc7f08e4353e1
+	$(UNTAR) glew-2.2.0.tgz
+	rm glew-2.2.0.tgz
 
-$(glew): | glew-2.1.0
-	cd glew-2.1.0 && mkdir -p build
-	cd glew-2.1.0/build && $(CMAKE) ./cmake
-	$(MAKE) -C glew-2.1.0/build
-	$(MAKE) -C glew-2.1.0/build install
+$(glew): | glew-2.2.0
+	cd glew-2.2.0 && mkdir -p build
+	# Increase policy version to support building with Cmake 4
+	cd glew-2.2.0/build && $(CMAKE) -DCMAKE_POLICY_VERSION_MINIMUM=3.5 cmake
+	$(MAKE) -C glew-2.2.0/build
+	$(MAKE) -C glew-2.2.0/build install
 
 $(glfw): | glfw
 	cd glfw && mkdir -p build
@@ -167,7 +168,8 @@ libarchive-3.7.7:
 $(libarchive): | $(zstd) libarchive-3.7.7
 	#cd libarchive-3.7.7 && $(CONFIGURE) --enable-shared=no --enable-static=yes --disable-bsdtar --disable-bsdcat --disable-bsdcpio --disable-posix-regex-lib --disable-xattr --disable-acl --without-zlib --without-bz2lib  --without-libb2 --without-iconv --without-lz4 --without-lzma --without-cng --without-openssl --without-xml2 --without-expat
 	cd libarchive-3.7.7 && mkdir -p build
-	cd libarchive-3.7.7/build && $(CMAKE) -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF -DENABLE_ACL=OFF -DENABLE_BZip2=OFF -DENABLE_CAT=OFF -DENABLE_CNG=OFF -DENABLE_COVERAGE=OFF -DENABLE_CPIO=OFF -DENABLE_EXPAT=OFF -DENABLE_ICONV=OFF -DENABLE_LIBB2=OFF -DENABLE_LIBXML2=OFF -DENABLE_LZ4=OFF -DENABLE_LZMA=OFF -DENABLE_LZO=OFF -DENABLE_MBEDTLS=OFF -DENABLE_NETTLE=OFF -DENABLE_OPENSSL=OFF -DENABLE_TAR=OFF -DENABLE_TEST=OFF -DENABLE_UNZIP=OFF -DENABLE_WERROR=OFF -DENABLE_XATTR=OFF -DENABLE_ZLIB=OFF -DENABLE_ZSTD=ON -DWINDOWS_VERSION="WIN7" -DZSTD_INCLUDE_DIR:PATH=$(DEP_PATH)/include -DZSTD_LIBRARY=$(DEP_PATH)/lib/libzstd.a ..
+	# Increase policy version to support building with Cmake 4
+	cd libarchive-3.7.7/build && $(CMAKE) -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF -DENABLE_ACL=OFF -DENABLE_BZip2=OFF -DENABLE_CAT=OFF -DENABLE_CNG=OFF -DENABLE_COVERAGE=OFF -DENABLE_CPIO=OFF -DENABLE_EXPAT=OFF -DENABLE_ICONV=OFF -DENABLE_LIBB2=OFF -DENABLE_LIBXML2=OFF -DENABLE_LZ4=OFF -DENABLE_LZMA=OFF -DENABLE_LZO=OFF -DENABLE_MBEDTLS=OFF -DENABLE_NETTLE=OFF -DENABLE_OPENSSL=OFF -DENABLE_TAR=OFF -DENABLE_TEST=OFF -DENABLE_UNZIP=OFF -DENABLE_WERROR=OFF -DENABLE_XATTR=OFF -DENABLE_ZLIB=OFF -DENABLE_ZSTD=ON -DWINDOWS_VERSION="WIN7" -DZSTD_INCLUDE_DIR:PATH=$(DEP_PATH)/include -DZSTD_LIBRARY=$(DEP_PATH)/lib/libzstd.a ..
 	$(MAKE) -C libarchive-3.7.7/build
 	$(MAKE) -C libarchive-3.7.7/build install
 
@@ -269,7 +271,7 @@ $(simde): simde/simde
 
 # Helpers
 
-src: glew-2.1.0 glfw jansson-2.12 libsamplerate-0.1.9 openssl-3.3.2 curl-8.10.0 zstd-1.5.6 libarchive-3.7.7 rtaudio nanovg nanosvg oui-blendish osdialog
+src: glew-2.2.0 glfw jansson-2.12 libsamplerate-0.1.9 openssl-3.3.2 curl-8.10.0 zstd-1.5.6 libarchive-3.7.7 rtaudio nanovg nanosvg oui-blendish osdialog
 
 clean:
 	git clean -fdx
